@@ -1,0 +1,41 @@
+-- Таблица со списком всех пользователей
+CREATE TABLE Users(
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(30) NOT NULL,
+	password VARCHAR(30) UNIQUE,
+	email VARCHAR(30) UNIQUE   
+);
+
+-- Таблица со списком групп чата
+CREATE TABLE Chats(
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(30) NOT NULL,
+	user_id INTEGER REFERENCES Users (id)
+);
+
+-- Таблица со списком участников чата
+CREATE TABLE Party(
+	chat_id INTEGER REFERENCES Chats (id),
+	user_id INTEGER REFERENCES Users (id)
+);
+
+-- Таблица с контентом сообщений
+CREATE TABLE Contents(
+	id SERIAL PRIMARY KEY,
+	chat_id INTEGER REFERENCES Chats (id),
+	user_id INTEGER REFERENCES Users (id),
+	content TEXT NOT NULL
+);
+
+-- Таблица со списком сообщений
+CREATE TABLE Messages(
+	id SERIAL PRIMARY KEY,
+	chat_id INTEGER REFERENCES Chats (id),
+	user_id INTEGER REFERENCES Users (id),	
+	content_id INTEGER REFERENCES Contents (id),
+	date_create TIMESTAMP NOT NULL
+);
+
+
+
+
