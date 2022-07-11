@@ -22,7 +22,6 @@ void Authentication::on_pB_login_clicked(){
     close();
 }
 
-
 void Authentication::on_pB_registration_clicked(){
     setVisible(false);
     registration->show();

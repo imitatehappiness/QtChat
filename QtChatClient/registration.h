@@ -7,14 +7,11 @@ namespace Ui {
 class Registration;
 }
 
-class Registration : public QDialog
-{
+class Registration : public QDialog{
     Q_OBJECT
-
 public:
     explicit Registration(QWidget *parent = nullptr);
     ~Registration();
-
 private slots:
     void on_pB_enter_clicked();
 public slots:

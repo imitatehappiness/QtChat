@@ -4,5 +4,7 @@
     <qresource prefix="/style">
         <file>style/icons/chat-icon.png</file>
         <file>style/stylesheet/appstyles.qss</file>
+        <file>style/icons/disconnect.png</file>
+        <file>style/icons/settings.png</file>
     </qresource>
 </RCC>
