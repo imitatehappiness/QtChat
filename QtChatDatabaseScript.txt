@@ -1,3 +1,5 @@
+-- Postgress SQL
+
 -- Таблица со списком всех пользователей
 CREATE TABLE Users(
 	id SERIAL PRIMARY KEY,
