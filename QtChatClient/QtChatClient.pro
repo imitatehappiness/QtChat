@@ -25,14 +25,33 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
+        authentication.cpp \
         main.cpp \
-        client.cpp
+        client.cpp \
+        registration.cpp \
+        settingmenu.cpp
 
 HEADERS += \
-        client.h
+        authentication.h \
+        client.h \
+        registration.h \
+        settingmenu.h
 
 FORMS += \
-        client.ui
+        authentication.ui \
+        client.ui \
+        registration.ui \
+        settingmenu.ui
 
 RESOURCES += \
     style.qrc
+
+
+OBJECTS_DIR = build/.obj
+
+MOC_DIR = build/.moc
+
+RCC_DIR = build/.rcc
+
+UI_DIR = build/.ui
+
