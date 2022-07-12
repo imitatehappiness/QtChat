@@ -8,6 +8,7 @@
 
 #include "settingmenu.h"
 #include "authentication.h"
+#include "./src/include/databasethread.h"
 
 namespace Ui {
 class Client;
@@ -30,6 +31,8 @@ private:
     QString mUsername;
     QString mHost;
     uint mPort;
+    DatabaseThread* mDB;
+
 protected:
     void closeEvent(QCloseEvent *event);
 private slots:
@@ -38,7 +41,7 @@ private slots:
     void socketReadyRead();
     void on_pB_setting_clicked();
     void on_pB_sendMessage_clicked();
-    void getSettingData(QString, QString, uint );
+    void getSettingData(const QString &, const QString &, const uint & );
     void getVisibleChatForm(bool);
     void on_pB_disconnect_clicked();
 };

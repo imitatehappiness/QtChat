@@ -3,8 +3,10 @@
 
 Client::Client(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::Client)
-{
+    ui(new Ui::Client){
+
+    mDB = new DatabaseThread();
+
     mAuthentication = new Authentication();
     mAuthentication->show();
 
@@ -13,13 +15,14 @@ Client::Client(QWidget *parent) :
     connectedToHost = false;
 
     ui->pB_sendMessage->setEnabled(0);
-    connect(mSettingMenu, SIGNAL(sendData(QString, QString, uint)), this, SLOT(getSettingData(QString, QString, uint)));
+    connect(mSettingMenu, SIGNAL(sendData(const QString &, const QString &, const uint & )), this, SLOT(getSettingData(const QString &, const QString &, const uint & )));
     connect(mAuthentication, SIGNAL(setVisibleChatForm(bool)), this, SLOT(getVisibleChatForm(bool)));
 }
 
 Client::~Client(){
     delete mAuthentication;
     delete mSettingMenu;
+    delete mDB;
     delete ui;
 }
 
@@ -32,7 +35,6 @@ void Client::socketConnected(){
     printMessage("<font color=\"Green\">Connected to server.</font>");
     QString name = mUsername;
     mSocket->write("<font color=\"Purple\">" + name.toUtf8() + " has joined the chat room.</font>");
-    // ui->pB_connect->setText("Disconnect");
     connectedToHost = true;
 }
 
@@ -40,7 +42,6 @@ void Client::socketDisconnected(){
     qDebug() << "Disconnected from server.";
     QString name = mUsername;
     printMessage("<font color=\"Red\">" + name.toUtf8() + " disconnected from server.</font>");
-    //  ui->pB_connect->setText("Connect");
     connectedToHost = false;
 }
 
@@ -61,7 +62,7 @@ void Client::on_pB_sendMessage_clicked(){
     ui->lE_inputMessage->clear();
 }
 
-void Client::getSettingData(QString username, QString host, uint port){
+void Client::getSettingData(const QString& username, const QString& host, const uint& port){
     mUsername = username;
     mHost = host;
     mPort = port;
@@ -86,6 +87,7 @@ void Client::getVisibleChatForm(bool visible){
 }
 
 void Client::closeEvent(QCloseEvent *event){
+    Q_UNUSED(event);
     QApplication::closeAllWindows();
 }
 

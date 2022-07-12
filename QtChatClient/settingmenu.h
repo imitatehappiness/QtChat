@@ -16,7 +16,7 @@ public:
     explicit SettingMenu(QWidget *parent = nullptr);
     ~SettingMenu();
 signals:
-    void sendData(QString, QString, uint);
+    void sendData(const QString &, const QString &, const uint & );
 private slots:
     void on_pB_cancel_clicked();
     void on_pB_save_clicked();

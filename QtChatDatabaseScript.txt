@@ -1,26 +1,35 @@
+-- Postgress SQL
+
+DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS chats CASCADE;
+DROP TABLE IF EXISTS party CASCADE;
+DROP TABLE IF EXISTS contents CASCADE;
+DROP TABLE IF EXISTS messages CASCADE;
+
 -- Таблица со списком всех пользователей
-CREATE TABLE Users(
+CREATE TABLE users(
 	id SERIAL PRIMARY KEY,
+	login VARCHAR(30) UNIQUE,
 	name VARCHAR(30) NOT NULL,
 	password VARCHAR(30) UNIQUE,
 	email VARCHAR(30) UNIQUE   
 );
 
 -- Таблица со списком групп чата
-CREATE TABLE Chats(
+CREATE TABLE chats(
 	id SERIAL PRIMARY KEY,
 	name VARCHAR(50) NOT NULL,
 	user_id INTEGER REFERENCES Users (id)
 );
 
 -- Таблица со списком участников чата
-CREATE TABLE Party(
+CREATE TABLE party(
 	chat_id INTEGER REFERENCES Chats (id),
 	user_id INTEGER REFERENCES Users (id)
 );
 
 -- Таблица с контентом сообщений
-CREATE TABLE Contents(
+CREATE TABLE contents(
 	id SERIAL PRIMARY KEY,
 	chat_id INTEGER REFERENCES Chats (id),
 	user_id INTEGER REFERENCES Users (id),
@@ -28,14 +37,10 @@ CREATE TABLE Contents(
 );
 
 -- Таблица со списком сообщений
-CREATE TABLE Messages(
+CREATE TABLE messages(
 	id SERIAL PRIMARY KEY,
 	chat_id INTEGER REFERENCES Chats (id),
 	user_id INTEGER REFERENCES Users (id),	
 	content_id INTEGER REFERENCES Contents (id),
 	date_create TIMESTAMP NOT NULL
 );
-
-
-
-
