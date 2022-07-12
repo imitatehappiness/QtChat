@@ -44,7 +44,3 @@ CREATE TABLE messages(
 	content_id INTEGER REFERENCES Contents (id),
 	date_create TIMESTAMP NOT NULL
 );
-
-
-
-
