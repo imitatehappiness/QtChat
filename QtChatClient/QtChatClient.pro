@@ -5,7 +5,7 @@
 #-------------------------------------------------
 
 QT += core gui
-QT += network
+QT += network sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -29,12 +29,16 @@ SOURCES += \
         main.cpp \
         client.cpp \
         registration.cpp \
+        src/databaseaccessor.cpp \
+        src/databasethread.cpp \
         settingmenu.cpp
 
 HEADERS += \
         authentication.h \
         client.h \
         registration.h \
+        src/include/databaseaccessor.h \
+        src/include/databasethread.h \
         settingmenu.h
 
 FORMS += \

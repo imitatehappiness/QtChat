@@ -8,6 +8,7 @@
 
 #include "settingmenu.h"
 #include "authentication.h"
+#include "./src/include/databasethread.h"
 
 namespace Ui {
 class Client;
@@ -30,6 +31,8 @@ private:
     QString mUsername;
     QString mHost;
     uint mPort;
+    DatabaseThread* mDB;
+
 protected:
     void closeEvent(QCloseEvent *event);
 private slots:

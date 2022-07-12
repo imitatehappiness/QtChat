@@ -3,8 +3,10 @@
 
 Client::Client(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::Client)
-{
+    ui(new Ui::Client){
+
+    mDB = new DatabaseThread();
+
     mAuthentication = new Authentication();
     mAuthentication->show();
 
@@ -20,6 +22,7 @@ Client::Client(QWidget *parent) :
 Client::~Client(){
     delete mAuthentication;
     delete mSettingMenu;
+    delete mDB;
     delete ui;
 }
 
@@ -32,7 +35,6 @@ void Client::socketConnected(){
     printMessage("<font color=\"Green\">Connected to server.</font>");
     QString name = mUsername;
     mSocket->write("<font color=\"Purple\">" + name.toUtf8() + " has joined the chat room.</font>");
-    // ui->pB_connect->setText("Disconnect");
     connectedToHost = true;
 }
 
@@ -40,7 +42,6 @@ void Client::socketDisconnected(){
     qDebug() << "Disconnected from server.";
     QString name = mUsername;
     printMessage("<font color=\"Red\">" + name.toUtf8() + " disconnected from server.</font>");
-    //  ui->pB_connect->setText("Connect");
     connectedToHost = false;
 }
 
