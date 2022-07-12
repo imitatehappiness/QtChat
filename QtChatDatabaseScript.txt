@@ -9,7 +9,7 @@ CREATE TABLE Users(
 -- Таблица со списком групп чата
 CREATE TABLE Chats(
 	id SERIAL PRIMARY KEY,
-	name VARCHAR(30) NOT NULL,
+	name VARCHAR(50) NOT NULL,
 	user_id INTEGER REFERENCES Users (id)
 );
 
