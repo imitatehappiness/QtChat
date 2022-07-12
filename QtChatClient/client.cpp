@@ -15,7 +15,7 @@ Client::Client(QWidget *parent) :
     connectedToHost = false;
 
     ui->pB_sendMessage->setEnabled(0);
-    connect(mSettingMenu, SIGNAL(sendData(QString, QString, uint)), this, SLOT(getSettingData(QString, QString, uint)));
+    connect(mSettingMenu, SIGNAL(sendData(const QString &, const QString &, const uint & )), this, SLOT(getSettingData(const QString &, const QString &, const uint & )));
     connect(mAuthentication, SIGNAL(setVisibleChatForm(bool)), this, SLOT(getVisibleChatForm(bool)));
 }
 
@@ -62,7 +62,7 @@ void Client::on_pB_sendMessage_clicked(){
     ui->lE_inputMessage->clear();
 }
 
-void Client::getSettingData(QString username, QString host, uint port){
+void Client::getSettingData(const QString& username, const QString& host, const uint& port){
     mUsername = username;
     mHost = host;
     mPort = port;
@@ -87,6 +87,7 @@ void Client::getVisibleChatForm(bool visible){
 }
 
 void Client::closeEvent(QCloseEvent *event){
+    Q_UNUSED(event);
     QApplication::closeAllWindows();
 }
 

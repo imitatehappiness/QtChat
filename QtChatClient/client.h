@@ -41,7 +41,7 @@ private slots:
     void socketReadyRead();
     void on_pB_setting_clicked();
     void on_pB_sendMessage_clicked();
-    void getSettingData(QString, QString, uint );
+    void getSettingData(const QString &, const QString &, const uint & );
     void getVisibleChatForm(bool);
     void on_pB_disconnect_clicked();
 };
