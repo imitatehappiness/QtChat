@@ -17,6 +17,7 @@ Client::Client(QWidget *parent) :
     ui->pB_sendMessage->setEnabled(0);
     connect(mSettingMenu, SIGNAL(sendData(const QString &, const QString &, const uint & )), this, SLOT(getSettingData(const QString &, const QString &, const uint & )));
     connect(mAuthentication, SIGNAL(setVisibleChatForm(bool)), this, SLOT(getVisibleChatForm(bool)));
+    connect(this, SIGNAL(sendMessageEnter()), this, SLOT(on_pB_sendMessage_clicked()));
 }
 
 Client::~Client(){
@@ -101,3 +102,9 @@ void Client::on_pB_disconnect_clicked(){
     ui->pB_sendMessage->setEnabled(0);
 }
 
+void Client::keyPressEvent(QKeyEvent *event){
+    //QKeyEvent* key = static_cast<QKeyEvent*>(event);
+    if (event->key() == Qt::Key_Return){
+        emit sendMessageEnter();
+    }
+}
