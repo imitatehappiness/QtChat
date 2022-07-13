@@ -40,8 +40,7 @@ void SettingMenu::on_pB_save_clicked(){
     close();
 }
 
-void SettingMenu::show()
-{
+void SettingMenu::show(){
     if(!isHidden()) {
         showNormal();
         activateWindow();

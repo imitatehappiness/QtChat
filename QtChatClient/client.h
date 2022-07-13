@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QTcpSocket>
 #include <QString>
+#include <QHostAddress>
 
 #include "settingmenu.h"
 #include "authentication.h"

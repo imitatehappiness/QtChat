@@ -23,6 +23,7 @@ Client::~Client(){
     delete mAuthentication;
     delete mSettingMenu;
     delete mDB;
+    delete mSocket;
     delete ui;
 }
 
@@ -67,11 +68,14 @@ void Client::getSettingData(const QString& username, const QString& host, const 
     mHost = host;
     mPort = port;
 
+    qDebug() << mHost;
+    qDebug() << mPort;
+
     ui->pB_sendMessage->setEnabled(0);
 
     if (!connectedToHost){
         mSocket = new QTcpSocket();
-
+        mSocket->connectToHost(mHost, mPort);
         connect(mSocket, SIGNAL(connected()),    this, SLOT(socketConnected()));
         connect(mSocket, SIGNAL(disconnected()), this, SLOT(socketDisconnected()));
         connect(mSocket, SIGNAL(readyRead()),    this, SLOT(socketReadyRead()));
