@@ -39,7 +39,8 @@ HEADERS += \
         registration.h \
         src/include/databaseaccessor.h \
         src/include/databasethread.h \
-        settingmenu.h
+        settingmenu.h \
+        parameters.h
 
 FORMS += \
         authentication.ui \

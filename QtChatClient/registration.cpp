@@ -6,10 +6,11 @@ Registration::Registration(QWidget *parent) :
     ui(new Ui::Registration){
 
     ui->setupUi(this);
+    initFormObject();
 
-    QRegExp emailRegex ("^[A-Z0-9a-z._-]{1,}@(\\w+)(\\.(\\w+))(\\.(\\w+))?(\\.(\\w+))?$");
-    QRegExpValidator *emailValidator = new QRegExpValidator(emailRegex, this);
-    ui->lE_mail->setValidator(emailValidator);
+//    QRegExp emailRegex ("^[A-Z0-9a-z._-]{1,}@(\\w+)(\\.(\\w+))(\\.(\\w+))?(\\.(\\w+))?$");
+//    QRegExpValidator *emailValidator = new QRegExpValidator(emailRegex, this);
+//    ui->lE_mail->setValidator(emailValidator);
 
     mDB = new DatabaseThread();
 }
@@ -19,69 +20,124 @@ Registration::~Registration(){
     delete ui;
 }
 
-void Registration::on_pB_enter_clicked(){
-    ui->l_information->setStyleSheet("color: red");
-    if(ui->lE_login->text() == ""){
-        ui->l_information->setText("Login is empty");
-    }else if(ui->lE_password->text() == ""){
-        ui->l_information->setText("Password is empty");
-    }else if(ui->lE_mail->text() == ""){
-        ui->l_information->setText("Email is empty");
-    }else if (ui->lE_confirmPassword->text() != ui->lE_password->text()){
-        ui->l_information->setText("Passwords don't match");
-    }else{
-        QString login, password, email;
-        login = ui->lE_login->text();
-        password = ui->lE_password->text();
-        email = ui->lE_mail->text();
+void Registration::enterClicked(){
 
+    QString login, password, confirmPassword, email;
+    login = mLineEditsObjects[idFormObject::registrationLineEditLogin].first->text();
+    password = mLineEditsObjects[idFormObject::registrationLineEditPassword].first->text();
+    confirmPassword =  mLineEditsObjects[idFormObject::registrationLineEditConfirmPassword].first->text();
+    email = mLineEditsObjects[idFormObject::registrationLineEditEmail].first->text();
+
+    if(login == ""){
+        mLabelObjects[idFormObject::registrationLabelInformation].first->setText("Login is empty");
+    }else if(password == ""){
+        mLabelObjects[idFormObject::registrationLabelInformation].first->setText("Password is empty");
+    }else if(email == ""){
+        mLabelObjects[idFormObject::registrationLabelInformation].first->setText("Email is empty");
+    }else if (password != confirmPassword){
+        mLabelObjects[idFormObject::registrationLabelInformation].first->setText("Passwords don't match");
+    }else{
         QString query = "SELECT id FROM users WHERE login = '" + login + "'";
         bool validate = mDB->setQuery(query);
-        Q_UNUSED(validate);
 
         QVector<QVector<QVariant>> res =  mDB->getData();
         if(res.size() != 0){
-            ui->l_information->setText("Login is already in use");
+            mLabelObjects[idFormObject::registrationLabelInformation].first->setText("Login is already in use");
         }else{
 
             QString query = "SELECT id FROM users WHERE email = '" + email + "'";
             validate = mDB->setQuery(query);
             res =  mDB->getData();
             if(res.size() != 0){
-                ui->l_information->setText("Email is already in use");
+                mLabelObjects[idFormObject::registrationLabelInformation].first->setText("Email is already in use");
             }else{
 
                 QString query = "INSERT INTO users (login, name, password, email) VALUES ( '" + login + "', '" + login + "', '" + password + "', '" + email + "')";
                 validate = mDB->setQuery(query);
-                ui->l_information->setText("");
-                ui->l_information->setStyleSheet("");
+                mLabelObjects[idFormObject::registrationLabelInformation].first->setText("");
                 emit setVisibleLoginForm(true);
                 close();
             }
         }
+        Q_UNUSED(validate);
     }
+}
+
+void Registration::cancelClicked(){
+    emit setVisibleLoginForm(true);
+    close();
 }
 
 void Registration::show(){
     if(!isHidden()) {
         showNormal();
         activateWindow();
-    }
-    else {
+    }else {
         QWidget::show();
-        ui->lE_login->setText("");
-        ui->lE_password->setText("");
-        ui->lE_confirmPassword->setText("");
-        ui->lE_mail->setText("");
-        ui->l_information->setText("");
+        mLineEditsObjects[idFormObject::registrationLineEditLogin].first->setText("");
+        mLineEditsObjects[idFormObject::registrationLineEditPassword].first->setText("");
+        mLineEditsObjects[idFormObject::registrationLineEditConfirmPassword].first->setText("");
+        mLineEditsObjects[idFormObject::registrationLineEditEmail].first->setText("");
+        mLabelObjects[idFormObject::registrationLabelInformation].first->setText("");
     }
 }
 
-void Registration::on_pB_cancel_clicked(){
-    emit setVisibleLoginForm(true);
-    close();
-}
+void Registration::initFormObject(){
 
+    /// @section QLineEdit =======================================================================================================
+    QGridLayout *gLineEdit = new QGridLayout;
+    ui->w_widgetsLineEdit->setLayout(gLineEdit);
+
+    mLineEditsObjects[idFormObject::registrationLineEditLogin]           = {new QLineEdit(), "Login"};
+    mLineEditsObjects[idFormObject::registrationLineEditPassword]        = {new QLineEdit(), "Password"};
+    mLineEditsObjects[idFormObject::registrationLineEditConfirmPassword] = {new QLineEdit(), "Confirm Password"};
+    mLineEditsObjects[idFormObject::registrationLineEditEmail]           = {new QLineEdit(), "Email"};
+
+    int row = 1, col = 1;
+    for(const auto &w : mLineEditsObjects){
+        QLineEdit * lineEdit = w.first;
+        lineEdit->setPlaceholderText(w.second);
+        lineEdit->setMinimumSize(300, MIN_HEIGHT_OBJECT);
+        gLineEdit->addWidget(lineEdit, row, col);
+        row++;
+    }
+    mLineEditsObjects[idFormObject::registrationLineEditPassword].first->setEchoMode(QLineEdit::EchoMode::Password);
+    mLineEditsObjects[idFormObject::registrationLineEditConfirmPassword].first->setEchoMode(QLineEdit::EchoMode::Password);
+
+    /// @section QPushButton =======================================================================================================
+    QGridLayout *gPushButton = new QGridLayout;
+    ui->w_widgetsPushButton->setLayout(gPushButton);
+
+    mPushButtonObjects[idFormObject::registrationPushButtonCancel] = {new QPushButton(), "Cancel"};
+    mPushButtonObjects[idFormObject::registrationPushButtonEnter]  = {new QPushButton(), "Enter"};
+
+    row = 1, col = 1;
+    for(const auto &w : mPushButtonObjects){
+        QPushButton * pushButton = w.first;
+        pushButton->setText(w.second);
+        pushButton->setMinimumSize(100, MIN_HEIGHT_OBJECT);
+        gPushButton->addWidget(pushButton, row, col);
+        col++;
+    }
+
+    connect(mPushButtonObjects[idFormObject::registrationPushButtonCancel].first, SIGNAL(clicked()), this, SLOT(cancelClicked()));
+    connect(mPushButtonObjects[idFormObject::registrationPushButtonEnter].first, SIGNAL(clicked()), this, SLOT(enterClicked()));
+
+    /// @section QLabel =======================================================================================================
+    QGridLayout *gLabel = new QGridLayout;
+    ui->w_widgetsLabel->setLayout(gLabel);
+
+    mLabelObjects[idFormObject::registrationLabelInformation] = {new QLabel(), "Information"};
+
+    row = 1, col = 1;
+    for(const auto &w : mLabelObjects){
+        QLabel * label = w.first;
+        label->setMinimumSize(300, MIN_HEIGHT_OBJECT);
+        label->setStyleSheet("color: red");
+        gLabel->addWidget(label, row, col);
+        col++;
+    }
+}
 
 
 

@@ -5,6 +5,8 @@
 #include <QDebug>
 #include <QTcpSocket>
 #include <QString>
+#include <QHostAddress>
+#include <QKeyEvent>
 
 #include "settingmenu.h"
 #include "authentication.h"
@@ -32,8 +34,10 @@ private:
     QString mHost;
     uint mPort;
     DatabaseThread* mDB;
-
+signals:
+    void sendMessageEnter();
 protected:
+   virtual void keyPressEvent(QKeyEvent *event);
     void closeEvent(QCloseEvent *event);
 private slots:
     void socketConnected();

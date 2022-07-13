@@ -4,8 +4,16 @@
 #include <QDialog>
 #include <QRegExp>
 #include <QRegExpValidator>
+#include <QMap>
+#include <QWidget>
+#include <QPushButton>
+#include <QLineEdit>
+#include <QLabel>
+#include <QLayout>
 
+#include "parameters.h"
 #include "./src/include/databasethread.h"
+
 namespace Ui {
 class Registration;
 }
@@ -16,8 +24,9 @@ public:
     Registration(QWidget *parent = nullptr);
     ~Registration();
 private slots:
-    void on_pB_enter_clicked();
-    void on_pB_cancel_clicked();
+    void cancelClicked();
+    void enterClicked();
+
 public slots:
     void show();
 
@@ -26,7 +35,11 @@ signals:
 private:
     Ui::Registration *ui;
     DatabaseThread* mDB;
+    QMap<int, QPair<QLineEdit*, QString>> mLineEditsObjects;
+    QMap<int, QPair<QPushButton*, QString>> mPushButtonObjects;
+    QMap<int, QPair<QLabel*, QString>> mLabelObjects;
 
+    void initFormObject();
 };
 
 #endif // REGISTRATION_H

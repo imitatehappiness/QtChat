@@ -11,6 +11,7 @@ Authentication::Authentication( QWidget *parent) :
 
     emit setVisibleChatForm(false);
     ui->setupUi(this);
+    initFormObject();
 }
 
 Authentication::~Authentication(){
@@ -19,10 +20,10 @@ Authentication::~Authentication(){
     delete mRegistration;
 }
 
-void Authentication::on_pB_login_clicked(){
+void Authentication::signInClicked(){
     QString login, password;
-    login = ui->lE_login->text();
-    password = ui->lE_password->text();
+    login = mLineEditsObjects[idFormObject::authenticationLineEditLogin].first->text();
+    password = mLineEditsObjects[idFormObject::authenticationLineEditPassword].first->text();
     QString query = "SELECT id FROM users WHERE login = '" + login + "' AND password = '" + password + "'";
     bool validate = mDB->setQuery(query);
     Q_UNUSED(validate);
@@ -32,21 +33,19 @@ void Authentication::on_pB_login_clicked(){
         emit setVisibleChatForm(true);
         close();
     }else{
-        ui->l_information->setStyleSheet("color: red");
-        ui->l_information->setText("Invalid login or password");
+        mLabelObjects[idFormObject::authenticationLabelInformation].first->setText("Invalid login or password");
     }
 }
 
-void Authentication::on_pB_registration_clicked(){
+void Authentication::registrationClicked(){
     setVisible(false);
     mRegistration->show();
 }
 
 void Authentication::getVisibleLoginForm(bool visible){
-    ui->lE_login->setText("");
-    ui->lE_password->setText("");
-    ui->l_information->setStyleSheet("");
-    ui->l_information->setText("");
+    mLineEditsObjects[idFormObject::authenticationLineEditLogin].first->setText("");
+    mLineEditsObjects[idFormObject::authenticationLineEditPassword].first->setText("");
+    mLabelObjects[idFormObject::authenticationLabelInformation].first->setText("");
 
     setVisible(visible);
 }
@@ -55,10 +54,65 @@ void Authentication::show(){
     if(!isHidden()){
         showNormal();
         activateWindow();
-    }
-    else {
-        ui->l_information->setStyleSheet("");
-        ui->l_information->setText("");
+    }else {
+        mLineEditsObjects[idFormObject::authenticationLineEditLogin].first->setText("");
+        mLineEditsObjects[idFormObject::authenticationLineEditPassword].first->setText("");
+        mLabelObjects[idFormObject::authenticationLabelInformation].first->setText("");
         QWidget::show();
+    }
+}
+
+void Authentication::initFormObject(){
+    /// @section QLineEdit =======================================================================================================
+    QGridLayout *gLineEdit = new QGridLayout;
+    ui->w_widgetsLineEdit->setLayout(gLineEdit);
+
+    mLineEditsObjects[idFormObject::authenticationLineEditLogin]    = {new QLineEdit(), "Login"};
+    mLineEditsObjects[idFormObject::authenticationLineEditPassword] = {new QLineEdit(), "Password"};
+
+    int row = 1, col = 1;
+    for(const auto &w : mLineEditsObjects){
+        QLineEdit * lineEdit = w.first;
+        lineEdit->setPlaceholderText(w.second);
+        lineEdit->setMinimumSize(300, MIN_HEIGHT_OBJECT);
+        gLineEdit->addWidget(lineEdit, row, col);
+        row++;
+    }
+
+    mLineEditsObjects[idFormObject::authenticationLineEditPassword].first->setEchoMode(QLineEdit::EchoMode::Password);
+
+
+    /// @section QPushButton =======================================================================================================
+    QGridLayout *gPushButton = new QGridLayout;
+    ui->w_widgetsPushButton->setLayout(gPushButton);
+
+    mPushButtonObjects[idFormObject::authenticationPushButtonRegistration] = {new QPushButton(), "Registration"};
+    mPushButtonObjects[idFormObject::authenticationPushButtonSignIn]  = {new QPushButton(), "Sign In"};
+
+    row = 1, col = 1;
+    for(const auto &w : mPushButtonObjects){
+        QPushButton * pushButton = w.first;
+        pushButton->setText(w.second);
+        pushButton->setMinimumSize(100, MIN_HEIGHT_OBJECT);
+        gPushButton->addWidget(pushButton, row, col);
+        col++;
+    }
+
+    connect(mPushButtonObjects[idFormObject::authenticationPushButtonSignIn].first, SIGNAL(clicked()), this, SLOT(signInClicked()));
+    connect(mPushButtonObjects[idFormObject::authenticationPushButtonRegistration].first, SIGNAL(clicked()), this, SLOT(registrationClicked()));
+
+    /// @section QLabel =======================================================================================================
+    QGridLayout *gLabel = new QGridLayout;
+    ui->w_widgetsLabel->setLayout(gLabel);
+
+    mLabelObjects[idFormObject::authenticationLabelInformation] = {new QLabel(), "Information"};
+
+    row = 1, col = 1;
+    for(const auto &w : mLabelObjects){
+        QLabel * label = w.first;
+        label->setMinimumSize(300, MIN_HEIGHT_OBJECT);
+        label->setStyleSheet("color: red");
+        gLabel->addWidget(label, row, col);
+        col++;
     }
 }

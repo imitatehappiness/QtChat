@@ -17,17 +17,19 @@ Client::Client(QWidget *parent) :
     ui->pB_sendMessage->setEnabled(0);
     connect(mSettingMenu, SIGNAL(sendData(const QString &, const QString &, const uint & )), this, SLOT(getSettingData(const QString &, const QString &, const uint & )));
     connect(mAuthentication, SIGNAL(setVisibleChatForm(bool)), this, SLOT(getVisibleChatForm(bool)));
+    connect(this, SIGNAL(sendMessageEnter()), this, SLOT(on_pB_sendMessage_clicked()));
 }
 
 Client::~Client(){
     delete mAuthentication;
     delete mSettingMenu;
     delete mDB;
+    delete mSocket;
     delete ui;
 }
 
 void Client::printMessage(const QString &message){
-    ui->tE_allMessage->append(message);
+    ui->tE_display->append(message);
 }
 
 void Client::socketConnected(){
@@ -46,7 +48,7 @@ void Client::socketDisconnected(){
 }
 
 void Client::socketReadyRead(){
-    ui->tE_allMessage->append(mSocket->readAll());
+    ui->tE_display->append(mSocket->readAll());
 }
 
 void Client::on_pB_setting_clicked(){
@@ -67,19 +69,20 @@ void Client::getSettingData(const QString& username, const QString& host, const 
     mHost = host;
     mPort = port;
 
+    qDebug() << mHost;
+    qDebug() << mPort;
+
     ui->pB_sendMessage->setEnabled(0);
 
     if (!connectedToHost){
         mSocket = new QTcpSocket();
-
+        mSocket->connectToHost(mHost, mPort);
         connect(mSocket, SIGNAL(connected()),    this, SLOT(socketConnected()));
         connect(mSocket, SIGNAL(disconnected()), this, SLOT(socketDisconnected()));
         connect(mSocket, SIGNAL(readyRead()),    this, SLOT(socketReadyRead()));
 
-        mSocket->connectToHost(mHost, mPort);
         ui->pB_sendMessage->setEnabled(1);
     }
-
 }
 
 void Client::getVisibleChatForm(bool visible){
@@ -96,5 +99,12 @@ void Client::on_pB_disconnect_clicked(){
         mSocket->write("<font color=\"Orange\">" + mUsername.toUtf8() + " has left the chat room.</font>");
         mSocket->disconnectFromHost();
     }
+    ui->pB_sendMessage->setEnabled(0);
 }
 
+void Client::keyPressEvent(QKeyEvent *event){
+    //QKeyEvent* key = static_cast<QKeyEvent*>(event);
+    if (event->key() == Qt::Key_Return){
+        emit sendMessageEnter();
+    }
+}
