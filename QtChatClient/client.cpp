@@ -27,7 +27,7 @@ Client::~Client(){
 }
 
 void Client::printMessage(const QString &message){
-    ui->tE_allMessage->append(message);
+    ui->tE_display->append(message);
 }
 
 void Client::socketConnected(){
@@ -46,7 +46,7 @@ void Client::socketDisconnected(){
 }
 
 void Client::socketReadyRead(){
-    ui->tE_allMessage->append(mSocket->readAll());
+    ui->tE_display->append(mSocket->readAll());
 }
 
 void Client::on_pB_setting_clicked(){
@@ -76,10 +76,8 @@ void Client::getSettingData(const QString& username, const QString& host, const 
         connect(mSocket, SIGNAL(disconnected()), this, SLOT(socketDisconnected()));
         connect(mSocket, SIGNAL(readyRead()),    this, SLOT(socketReadyRead()));
 
-        mSocket->connectToHost(mHost, mPort);
         ui->pB_sendMessage->setEnabled(1);
     }
-
 }
 
 void Client::getVisibleChatForm(bool visible){
@@ -96,5 +94,6 @@ void Client::on_pB_disconnect_clicked(){
         mSocket->write("<font color=\"Orange\">" + mUsername.toUtf8() + " has left the chat room.</font>");
         mSocket->disconnectFromHost();
     }
+    ui->pB_sendMessage->setEnabled(0);
 }
 

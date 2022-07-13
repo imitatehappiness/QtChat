@@ -16,7 +16,7 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="1" column="0" colspan="2">
-     <widget class="QTextEdit" name="tE_allMessage">
+     <widget class="QTextEdit" name="tE_display">
       <property name="enabled">
        <bool>false</bool>
       </property>
