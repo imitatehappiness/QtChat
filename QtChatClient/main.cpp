@@ -21,6 +21,7 @@ int main(int argc, char *argv[]){
 
     a.setWindowIcon(QIcon("./style/icons/chat-icon.png"));
 
+
     Client w;
     w.show();
     w.setVisible(false);

@@ -7,6 +7,10 @@
 #include <QString>
 #include <QHostAddress>
 #include <QKeyEvent>
+#include <QCloseEvent>
+#include <QSystemTrayIcon>
+#include <QAction>
+#include <QStyle>
 
 #include "settingmenu.h"
 #include "authentication.h"
@@ -21,12 +25,13 @@ class Client : public QMainWindow{
 public:
     explicit Client(QWidget *parent = 0);
     ~Client();
-
+public slots:
+    void show();
 private:
     Ui::Client *ui;
     bool connectedToHost;
     void printMessage(const QString& message);
-
+    void setTrayIcon();
     QTcpSocket* mSocket;
     SettingMenu* mSettingMenu;
     Authentication* mAuthentication;
@@ -34,6 +39,8 @@ private:
     QString mHost;
     uint mPort;
     DatabaseThread* mDB;
+    QSystemTrayIcon* trayIcon;
+
 signals:
     void sendMessageEnter();
 protected:

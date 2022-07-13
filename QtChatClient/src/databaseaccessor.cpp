@@ -4,7 +4,7 @@ QMutex DatabaseAccessor::sDBMutex;
 QSqlDatabase DatabaseAccessor::sDBPtr;
 
 DatabaseAccessor::DatabaseAccessor(){
-    QString pathConfig = QDir::currentPath() + "/resourse/config.ini";
+    QString pathConfig = QDir::currentPath() + "/config.ini";
     QSettings setting(pathConfig, QSettings::IniFormat);
 
     dbHostName = setting.value("CONNECT/IP").toString();

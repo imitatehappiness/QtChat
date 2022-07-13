@@ -5,16 +5,18 @@ Client::Client(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Client){
 
+    ui->setupUi(this);
+
     mDB = new DatabaseThread();
 
     mAuthentication = new Authentication();
     mAuthentication->show();
 
     mSettingMenu = new SettingMenu();
-    ui->setupUi(this);
     connectedToHost = false;
 
     ui->pB_sendMessage->setEnabled(0);
+
     connect(mSettingMenu, SIGNAL(sendData(const QString &, const QString &, const uint & )), this, SLOT(getSettingData(const QString &, const QString &, const uint & )));
     connect(mAuthentication, SIGNAL(setVisibleChatForm(bool)), this, SLOT(getVisibleChatForm(bool)));
     connect(this, SIGNAL(sendMessageEnter()), this, SLOT(on_pB_sendMessage_clicked()));
@@ -87,6 +89,7 @@ void Client::getSettingData(const QString& username, const QString& host, const 
 
 void Client::getVisibleChatForm(bool visible){
     setVisible(visible);
+    setTrayIcon();
 }
 
 void Client::closeEvent(QCloseEvent *event){
@@ -103,8 +106,36 @@ void Client::on_pB_disconnect_clicked(){
 }
 
 void Client::keyPressEvent(QKeyEvent *event){
-    //QKeyEvent* key = static_cast<QKeyEvent*>(event);
     if (event->key() == Qt::Key_Return){
         emit sendMessageEnter();
+    }
+}
+
+void Client::setTrayIcon(){
+    trayIcon = new QSystemTrayIcon(this);
+    trayIcon->setIcon(QIcon(":/style/style/icons/chat-icon.png"));
+    trayIcon->setToolTip("Messanger");
+
+    QMenu* menu = new QMenu(this);
+
+    QAction* viewWindow = new QAction(trUtf8("Open messanger"), this);
+    QAction* quitAction = new QAction(trUtf8("Exit"), this);
+
+    connect(viewWindow, SIGNAL(triggered()), this, SLOT(show()));
+    connect(quitAction, SIGNAL(triggered()), this, SLOT(close()));
+
+    menu->addAction(viewWindow);
+    menu->addAction(quitAction);
+
+    trayIcon->setContextMenu(menu);
+    trayIcon->show();
+}
+
+void Client::show(){
+    if(!isHidden()) {
+        showNormal();
+        activateWindow();
+    }else {
+        QWidget::show();
     }
 }

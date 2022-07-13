@@ -1,29 +1,69 @@
-QMainWindow {
-        background-color:#1e1d23;
-}
-QDialog {
-        background-color:#1e1d23;
-}
-QColorDialog {
-        background-color:#1e1d23;
-}
-QTextEdit {
-        background-color:#1e1d23;
-        color: #a9b7c6;
-        border: 1px solid #808086;
-        border-radius: 2px;
-}
-QPlainTextEdit {
-        selection-background-color:#007b50;
-        background-color:#1e1d23;
+/*
+
+===== COLORS ======
+#C6C5C1 - gray (background)
+#EEEEEE - light gray (background)
+#808086 - dark gray (text button:default)
+#233738 - green (text button:hover)
+#8A9F90 - light green (border)
+#233738 - light red (error/information)
+
+*/
+
+/* ===================== QMenu =====================*/
+QMenu::item:selected {
         border-style: solid;
         border-top-color: transparent;
         border-right-color: transparent;
-        border-left-color: transparent;
+        border-left-color: #233738;
         border-bottom-color: transparent;
-        border-width: 1px;
-        color: #a9b7c6;
+        border-left-width: 3px;
+        color: #233738;
+        padding-left:15px;
+        padding-top:4px;
+        padding-bottom:4px;
+        padding-right:7px;
+        background-color: #EEEEEE;
 }
+QMenu::item {
+        border-style: solid;
+        border-top-color: transparent;
+        border-right-color: transparent;
+        border-left-color: #808086;
+        border-bottom-color: transparent;
+        border-left-width: 3px;
+        color: #808086;
+        padding-left:15px;
+        padding-top:4px;
+        padding-bottom:4px;
+        padding-right:7px;
+        background-color: #EEEEEE;
+}
+QMenu{
+        background-color:#EEEEEE;
+}
+
+/* ===================== QLineEdit =====================*/
+QLineEdit {
+        border-width: 1px; border-radius: 4px;
+        border-color: #8A9F90;
+        border-style: inset;
+        padding: 0 8px;
+        color: #233738;
+        background: #C6C5C1;
+        selection-background-color:#233738;
+        selection-color: #EEEEEE;
+}
+QLineEdit::!enabled {
+        color: #808086
+}
+
+/* ===================== QLabel =====================*/
+QLabel {
+        color: #233738;
+}
+
+/* ===================== QPushButton =====================*/
 QPushButton{
     border-style: solid;
     border-top-color: transparent;
@@ -34,7 +74,7 @@ QPushButton{
     border-style: solid;
     color: #808086;
     padding-bottom: 1px;
-    background-color: #1e1d23;
+    background-color: #EEEEEE;
 }
 QPushButton::default{
     border-style: solid;
@@ -46,8 +86,94 @@ QPushButton::default{
     border-style: solid;
     color: #808086;
     padding-bottom: 1px;
-    background-color: #1e1d23;
+    background-color: #EEEEEE;
 }
+
+QPushButton:hover{
+        border-style: solid;
+        border-top-color: transparent;
+        border-right-color: transparent;
+        border-left-color: transparent;
+        border-bottom-color: #233738;
+        border-bottom-width: 2px;
+        border-style: solid;
+        color: #233738;
+        padding-bottom: 2px;
+        background-color: #EEEEEE;
+}
+QPushButton:pressed{
+        border-style: solid;
+        border-top-color: transparent;
+        border-right-color: transparent;
+        border-left-color: transparent;
+        border-bottom-color: #808086;
+        border-bottom-width: 2px;
+        border-style: solid;
+        color: #808086;
+        padding-bottom: 2px;
+        background-color: #EEEEEE;
+}
+QPushButton:disabled{
+        border-style: solid;
+        border-top-color: transparent;
+        border-right-color: transparent;
+        border-left-color: transparent;
+        border-bottom-color: #808086;
+        border-bottom-width: 2px;
+        border-style: solid;
+        color: #808086;
+        padding-bottom: 1px;
+        background-color: #EEEEEE;
+}
+
+/* ===================== QMainWindow =====================*/
+QMainWindow {
+        background-color:#EEEEEE;
+}
+
+/* ===================== QDialog =====================*/
+QDialog {
+        background-color:#EEEEEE;
+}
+
+/* ===================== QColorDialog =====================*/
+QColorDialog {
+        background-color:#EEEEEE;
+}
+
+/* ===================== QTextEdit =====================*/
+QTextEdit {
+        border-width: 1px; border-radius: 4px;
+        border-color: #8A9F90;
+        border-style: inset;
+        padding: 0 8px;
+        color: #233738;
+        background: #C6C5C1;
+        selection-background-color:#233738;
+        selection-color: #EEEEEE;
+}
+
+
+
+
+
+
+
+
+
+
+QPlainTextEdit {
+        selection-background-color:#007b50;
+        background-color:#1e1d23;
+        border-style: solid;
+        border-top-color: transparent;
+        border-right-color: transparent;
+        border-left-color: transparent;
+        border-bottom-color: transparent;
+        border-width: 1px;
+        color: #a9b7c6;
+}
+
 QToolButton {
         border-style: solid;
         border-top-color: transparent;
@@ -72,55 +198,8 @@ QToolButton:hover{
         padding-bottom: 1px;
         background-color: #1e1d23;
 }
-QPushButton:hover{
-        border-style: solid;
-        border-top-color: transparent;
-        border-right-color: transparent;
-        border-left-color: transparent;
-        border-bottom-color: #F8C9F9;
-        border-bottom-width: 2px;
-        border-style: solid;
-        color: #FFFFFF;
-        padding-bottom: 2px;
-        background-color: #1e1d23;
-}
-QPushButton:pressed{
-        border-style: solid;
-        border-top-color: transparent;
-        border-right-color: transparent;
-        border-left-color: transparent;
-        border-bottom-color: #F8C9F9;
-        border-bottom-width: 2px;
-        border-style: solid;
-        color: #F8C9F9;
-        padding-bottom: 1px;
-        background-color: #1e1d23;
-}
-QPushButton:disabled{
-        border-style: solid;
-        border-top-color: transparent;
-        border-right-color: transparent;
-        border-left-color: transparent;
-        border-bottom-color: #808086;
-        border-bottom-width: 2px;
-        border-style: solid;
-        color: #808086;
-        padding-bottom: 1px;
-        background-color: #1e1d23;
-}
-QLineEdit {
-        border-width: 1px; border-radius: 4px;
-        border-color: rgb(58, 58, 58);
-        border-style: inset;
-        padding: 0 8px;
-        color: #a9b7c6;
-        background:#1e1d23;
-        selection-background-color:#007b50;
-        selection-color: #FFFFFF;
-}
-QLabel {
-        color: #a9b7c6;
-}
+
+
 QLCDNumber {
         color: #37e6b4;
 }
@@ -151,38 +230,7 @@ QMenuBar::item:selected {
         background:#1e1d23;
         color: #FFFFFF;
 }
-QMenu::item:selected {
-        border-style: solid;
-        border-top-color: transparent;
-        border-right-color: transparent;
-        border-left-color: #04b97f;
-        border-bottom-color: transparent;
-        border-left-width: 2px;
-        color: #FFFFFF;
-        padding-left:15px;
-        padding-top:4px;
-        padding-bottom:4px;
-        padding-right:7px;
-        background-color: #1e1d23;
-}
-QMenu::item {
-        border-style: solid;
-        border-top-color: transparent;
-        border-right-color: transparent;
-        border-left-color: transparent;
-        border-bottom-color: transparent;
-        border-bottom-width: 1px;
-        border-style: solid;
-        color: #a9b7c6;
-        padding-left:17px;
-        padding-top:4px;
-        padding-bottom:4px;
-        padding-right:7px;
-        background-color: #1e1d23;
-}
-QMenu{
-        background-color:#1e1d23;
-}
+
 QTabWidget {
         color:rgb(0,0,0);
         background-color:#1e1d23;
