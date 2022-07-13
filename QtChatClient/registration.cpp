@@ -127,7 +127,7 @@ void Registration::initFormObject(){
     QGridLayout *gLabel = new QGridLayout;
     ui->w_widgetsLabel->setLayout(gLabel);
 
-    mLabelObjects[idFormObject::registrationLabelInformation] = {new QLabel(), "information"};
+    mLabelObjects[idFormObject::registrationLabelInformation] = {new QLabel(), "Information"};
 
     row = 1, col = 1;
     for(const auto &w : mLabelObjects){

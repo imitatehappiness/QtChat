@@ -2,7 +2,14 @@
 #define AUTHENTICATION_H
 
 #include <QDialog>
+#include <QMap>
+#include <QWidget>
+#include <QPushButton>
+#include <QLineEdit>
+#include <QLabel>
+#include <QLayout>
 
+#include "parameters.h"
 #include "registration.h"
 #include "./src/include/databasethread.h"
 
@@ -15,18 +22,24 @@ class Authentication : public QDialog{
 public:
      Authentication(QWidget *parent = nullptr);
     ~Authentication();
+public slots:
+    void show();
 signals:
     void setVisibleChatForm(bool);
+private slots:
+    void signInClicked();
+    void registrationClicked();
+    void getVisibleLoginForm(bool);
 private:
     Ui::Authentication *ui;
     Registration* mRegistration;
     DatabaseThread* mDB;
-private slots:
-    void on_pB_login_clicked();
-    void on_pB_registration_clicked();
-    void getVisibleLoginForm(bool);
-public slots:
-    void show();
+
+    QMap<int, QPair<QLineEdit*, QString>> mLineEditsObjects;
+    QMap<int, QPair<QPushButton*, QString>> mPushButtonObjects;
+    QMap<int, QPair<QLabel*, QString>> mLabelObjects;
+
+    void initFormObject();
 };
 
 #endif // AUTHENTICATION_H
