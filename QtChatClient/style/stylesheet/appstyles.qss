@@ -1,13 +1,7 @@
 /*
-
-===== COLORS ======
-#C6C5C1 - gray (background)
-#EEEEEE - light gray (background)
-#808086 - dark gray (text button:default)
-#233738 - green (text button:hover)
-#8A9F90 - light green (border)
-#233738 - light red (error/information)
-
+#252523 | dark gray | background        | window, pushButton
+#90C7CA | blue      | hover, color      | pushButton, menu
+#EEEEEE | white     | background, color | lineEdit, textEdit
 */
 
 /* ===================== QMenu =====================*/
@@ -15,32 +9,32 @@ QMenu::item:selected {
         border-style: solid;
         border-top-color: transparent;
         border-right-color: transparent;
-        border-left-color: #233738;
+        border-left-color: #252523;
         border-bottom-color: transparent;
         border-left-width: 3px;
-        color: #233738;
+        color: #EEEEEE;
         padding-left:15px;
         padding-top:4px;
         padding-bottom:4px;
         padding-right:7px;
-        background-color: #EEEEEE;
+        background-color: #252523;
 }
 QMenu::item {
         border-style: solid;
         border-top-color: transparent;
         border-right-color: transparent;
-        border-left-color: #808086;
+        border-left-color: #252523;
         border-bottom-color: transparent;
         border-left-width: 3px;
-        color: #808086;
+        color: #EEEEEE;
         padding-left:15px;
         padding-top:4px;
         padding-bottom:4px;
         padding-right:7px;
-        background-color: #EEEEEE;
+        background-color: #252523;
 }
 QMenu{
-        background-color:#EEEEEE;
+        background-color:#252523;
 }
 
 /* ===================== QLineEdit =====================*/
@@ -50,7 +44,7 @@ QLineEdit {
         border-style: inset;
         padding: 0 8px;
         color: #233738;
-        background: #C6C5C1;
+        background: #EEEEEE;
         selection-background-color:#233738;
         selection-color: #EEEEEE;
 }
@@ -60,7 +54,19 @@ QLineEdit::!enabled {
 
 /* ===================== QLabel =====================*/
 QLabel {
+        color: #90C7CA;
+}
+
+/* ===================== QTextEdit =====================*/
+QTextEdit {
+        border-width: 1px; border-radius: 4px;
+        border-color: #8A9F90;
+        border-style: inset;
+        padding: 0 8px;
         color: #233738;
+        background: #EEEEEE;
+        selection-background-color:#233738;
+        selection-color: #EEEEEE;
 }
 
 /* ===================== QPushButton =====================*/
@@ -69,24 +75,24 @@ QPushButton{
     border-top-color: transparent;
     border-right-color: transparent;
     border-left-color: transparent;
-    border-bottom-color: #808086;
+    border-bottom-color: #EEEEEE;
     border-bottom-width: 2px;
     border-style: solid;
-    color: #808086;
+    color: #EEEEEE;
     padding-bottom: 1px;
-    background-color: #EEEEEE;
+    background-color: #252523 ;
 }
 QPushButton::default{
     border-style: solid;
     border-top-color: transparent;
     border-right-color: transparent;
     border-left-color: transparent;
-    border-bottom-color: #808086;
+    border-bottom-color: #EEEEEE;
     border-bottom-width: 2px;
     border-style: solid;
-    color: #808086;
+    color: #EEEEEE;
     padding-bottom: 1px;
-    background-color: #EEEEEE;
+    background-color: #252523 ;
 }
 
 QPushButton:hover{
@@ -94,24 +100,24 @@ QPushButton:hover{
         border-top-color: transparent;
         border-right-color: transparent;
         border-left-color: transparent;
-        border-bottom-color: #233738;
+        border-bottom-color: #90C7CA;
         border-bottom-width: 2px;
         border-style: solid;
-        color: #233738;
+        color: #90C7CA;
         padding-bottom: 2px;
-        background-color: #EEEEEE;
+        background-color: #252523 ;
 }
 QPushButton:pressed{
         border-style: solid;
         border-top-color: transparent;
         border-right-color: transparent;
         border-left-color: transparent;
-        border-bottom-color: #808086;
+        border-bottom-color: #EEEEEE;
         border-bottom-width: 2px;
         border-style: solid;
-        color: #808086;
+        color: #EEEEEE;
         padding-bottom: 2px;
-        background-color: #EEEEEE;
+        background-color: #252523 ;
 }
 QPushButton:disabled{
         border-style: solid;
@@ -123,35 +129,24 @@ QPushButton:disabled{
         border-style: solid;
         color: #808086;
         padding-bottom: 1px;
-        background-color: #EEEEEE;
+        background-color: #252523 ;
 }
 
 /* ===================== QMainWindow =====================*/
 QMainWindow {
-        background-color:#EEEEEE;
+        background-color:#252523 ;
 }
 
 /* ===================== QDialog =====================*/
 QDialog {
-        background-color:#EEEEEE;
+        background-color:#252523 ;
 }
 
 /* ===================== QColorDialog =====================*/
 QColorDialog {
-        background-color:#EEEEEE;
+        background-color:#252523 ;
 }
 
-/* ===================== QTextEdit =====================*/
-QTextEdit {
-        border-width: 1px; border-radius: 4px;
-        border-color: #8A9F90;
-        border-style: inset;
-        padding: 0 8px;
-        color: #233738;
-        background: #C6C5C1;
-        selection-background-color:#233738;
-        selection-color: #EEEEEE;
-}
 
 
 

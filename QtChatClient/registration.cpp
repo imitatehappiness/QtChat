@@ -133,7 +133,6 @@ void Registration::initFormObject(){
     for(const auto &w : mLabelObjects){
         QLabel * label = w.first;
         label->setMinimumSize(300, MIN_HEIGHT_OBJECT);
-        label->setStyleSheet("color: #233738");
         gLabel->addWidget(label, row, col);
         col++;
     }

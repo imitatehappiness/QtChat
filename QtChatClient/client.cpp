@@ -18,7 +18,7 @@ Client::Client(QWidget *parent) :
     ui->pB_sendMessage->setEnabled(0);
 
     connect(mSettingMenu, SIGNAL(sendData(const QString &, const QString &, const uint & )), this, SLOT(getSettingData(const QString &, const QString &, const uint & )));
-    connect(mAuthentication, SIGNAL(setVisibleChatForm(bool)), this, SLOT(getVisibleChatForm(bool)));
+    connect(mAuthentication, SIGNAL(setVisibleChatForm(bool, uint, QString)), this, SLOT(getVisibleChatForm(bool, uint, QString)));
     connect(this, SIGNAL(sendMessageEnter()), this, SLOT(on_pB_sendMessage_clicked()));
 }
 
@@ -38,14 +38,14 @@ void Client::socketConnected(){
     qDebug() << "Connected to server.";
     printMessage("<font color=\"Green\">Connected to server.</font>");
     QString name = mUsername;
-    mSocket->write("<font color=\"Purple\">" + name.toUtf8() + " has joined the chat room.</font>");
+    mSocket->write("<font color=\"#233738\">" + name.toUtf8() + " has joined the chat room.</font>");
     connectedToHost = true;
 }
 
 void Client::socketDisconnected(){
     qDebug() << "Disconnected from server.";
     QString name = mUsername;
-    printMessage("<font color=\"Red\">" + name.toUtf8() + " disconnected from server.</font>");
+    printMessage("<font color=\"#B53543\">" + name.toUtf8() + " disconnected from server.</font>");
     connectedToHost = false;
 }
 
@@ -55,14 +55,36 @@ void Client::socketReadyRead(){
 
 void Client::on_pB_setting_clicked(){
     mSettingMenu->show();
-
 }
 
 void Client::on_pB_sendMessage_clicked(){
     QString name = mUsername;
     QString message = ui->lE_inputMessage->text();
+    bool validate;
 
-    mSocket->write("<font color=\"Blue\">" + name.toUtf8() + "</font>: " + message.toUtf8());
+    /// insert content
+    QString query = "INSERT INTO contents (chat_id, user_id, content) VALUES (" + QString::number(mClientInfo.idChat) + ", " +
+                                                                                  QString::number(mClientInfo.idUser) + ", '" +
+                                                                                  message + "')";
+    validate = mDB->setQuery(query);
+
+    ///select content id
+    query = "SELECT id FROM contents WHERE chat_id = " + QString::number(mClientInfo.idChat) +
+                                     " AND user_id = " + QString::number(mClientInfo.idUser) +
+                                     " AND content = '" + message + "'";
+
+    validate = mDB->setQuery(query);
+    QVector<QVector<QVariant>> res =  mDB->getData();
+    int idContent = res.size() != 0 ? res[0][0].toInt() :  -1;
+
+    /// insert message
+    query = "INSERT INTO messages (chat_id, user_id, content_id, date_create) VALUES (" + QString::number(mClientInfo.idChat) + ", " +
+                                                                                          QString::number(mClientInfo.idUser) + ", " +
+                                                                                          QString::number(idContent) + ", current_timestamp)";
+    validate = mDB->setQuery(query);
+    Q_UNUSED(validate);
+
+    mSocket->write("<font color=\"#155049\" style=\"font-weight: bold;\">" + name.toUtf8() + "</font>: " + message.toUtf8());
     ui->lE_inputMessage->clear();
 }
 
@@ -70,9 +92,6 @@ void Client::getSettingData(const QString& username, const QString& host, const 
     mUsername = username;
     mHost = host;
     mPort = port;
-
-    qDebug() << mHost;
-    qDebug() << mPort;
 
     ui->pB_sendMessage->setEnabled(0);
 
@@ -87,7 +106,10 @@ void Client::getSettingData(const QString& username, const QString& host, const 
     }
 }
 
-void Client::getVisibleChatForm(bool visible){
+void Client::getVisibleChatForm(bool visible, uint id, QString name){
+    mClientInfo.idUser = id;
+    mClientInfo.idChat = 1;
+    mClientInfo.username = name;
     setVisible(visible);
     setTrayIcon();
 }
@@ -99,7 +121,7 @@ void Client::closeEvent(QCloseEvent *event){
 
 void Client::on_pB_disconnect_clicked(){
     if (connectedToHost){
-        mSocket->write("<font color=\"Orange\">" + mUsername.toUtf8() + " has left the chat room.</font>");
+        mSocket->write("<font color=\"#5b836d\">" + mUsername.toUtf8() + " has left the chat room.</font>");
         mSocket->disconnectFromHost();
     }
     ui->pB_sendMessage->setEnabled(0);

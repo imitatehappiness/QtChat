@@ -9,7 +9,7 @@ Authentication::Authentication( QWidget *parent) :
     mRegistration = new Registration();
     connect(mRegistration, SIGNAL(setVisibleLoginForm(bool)), this, SLOT(getVisibleLoginForm(bool)));
 
-    emit setVisibleChatForm(false);
+    emit setVisibleChatForm(false, 0, "");
     ui->setupUi(this);
     initFormObject();
 }
@@ -24,13 +24,13 @@ void Authentication::signInClicked(){
     QString login, password;
     login = mLineEditsObjects[idFormObject::authenticationLineEditLogin].first->text();
     password = mLineEditsObjects[idFormObject::authenticationLineEditPassword].first->text();
-    QString query = "SELECT id FROM users WHERE login = '" + login + "' AND password = '" + password + "'";
+    QString query = "SELECT id, name FROM users WHERE login = '" + login + "' AND password = '" + password + "'";
     bool validate = mDB->setQuery(query);
     Q_UNUSED(validate);
     QVector<QVector<QVariant>> res =  mDB->getData();
 
     if(res.size() == 1){
-        emit setVisibleChatForm(true);
+        emit setVisibleChatForm(true, res[0][0].toUInt(), res[0][1].toString());
         close();
     }else{
         mLabelObjects[idFormObject::authenticationLabelInformation].first->setText("Invalid login or password");
@@ -111,7 +111,6 @@ void Authentication::initFormObject(){
     for(const auto &w : mLabelObjects){
         QLabel * label = w.first;
         label->setMinimumSize(300, MIN_HEIGHT_OBJECT);
-        label->setStyleSheet("color: #233738");
         gLabel->addWidget(label, row, col);
         col++;
     }

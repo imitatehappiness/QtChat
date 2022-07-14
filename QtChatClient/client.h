@@ -12,6 +12,7 @@
 #include <QAction>
 #include <QStyle>
 
+#include "parameters.h"
 #include "settingmenu.h"
 #include "authentication.h"
 #include "./src/include/databasethread.h"
@@ -40,6 +41,7 @@ private:
     uint mPort;
     DatabaseThread* mDB;
     QSystemTrayIcon* trayIcon;
+    ClientInformation mClientInfo;
 
 signals:
     void sendMessageEnter();
@@ -53,7 +55,7 @@ private slots:
     void on_pB_setting_clicked();
     void on_pB_sendMessage_clicked();
     void getSettingData(const QString &, const QString &, const uint & );
-    void getVisibleChatForm(bool);
+    void getVisibleChatForm(bool, uint, QString);
     void on_pB_disconnect_clicked();
 };
 

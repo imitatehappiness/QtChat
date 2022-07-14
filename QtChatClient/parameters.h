@@ -1,5 +1,14 @@
 #ifndef PARAMETERS_H
 #define PARAMETERS_H
+#include <QString>
+#include <QColor>
+
+const QColor COLOR_BLUE = QColor("#90C7CA");
+struct ClientInformation{
+    uint idUser;
+    uint idChat;
+    QString username;
+};
 
 const int MIN_HEIGHT_OBJECT = 24;
 namespace idFormObject{
