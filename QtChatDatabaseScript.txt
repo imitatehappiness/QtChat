@@ -19,28 +19,31 @@ CREATE TABLE users(
 CREATE TABLE chats(
 	id SERIAL PRIMARY KEY,
 	name VARCHAR(50) NOT NULL,
-	user_id INTEGER REFERENCES Users (id)
+	user_id INTEGER REFERENCES users (id)
 );
 
 -- Таблица со списком участников чата
 CREATE TABLE party(
-	chat_id INTEGER REFERENCES Chats (id),
-	user_id INTEGER REFERENCES Users (id)
+	chat_id INTEGER REFERENCES chats (id),
+	user_id INTEGER REFERENCES users (id)
 );
 
 -- Таблица с контентом сообщений
 CREATE TABLE contents(
 	id SERIAL PRIMARY KEY,
-	chat_id INTEGER REFERENCES Chats (id),
-	user_id INTEGER REFERENCES Users (id),
+	chat_id INTEGER REFERENCES chats (id),
+	user_id INTEGER REFERENCES users (id),
 	content TEXT NOT NULL
 );
 
 -- Таблица со списком сообщений
 CREATE TABLE messages(
 	id SERIAL PRIMARY KEY,
-	chat_id INTEGER REFERENCES Chats (id),
-	user_id INTEGER REFERENCES Users (id),	
-	content_id INTEGER REFERENCES Contents (id),
+	chat_id INTEGER REFERENCES chats (id),
+	user_id INTEGER REFERENCES users (id),	
+	content_id INTEGER REFERENCES contents (id),
 	date_create TIMESTAMP NOT NULL
 );
+
+
+INSERT INTO users (login, name, password, email) VALUES ('admin', 'admin', 'admin', 'admin@mail.ru');
