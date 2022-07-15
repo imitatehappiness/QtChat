@@ -47,3 +47,4 @@ CREATE TABLE messages(
 
 
 INSERT INTO users (login, name, password, email) VALUES ('admin', 'admin', 'admin', 'admin@mail.ru');
+INSERT INTO chats (name, user_id) VALUES ('admin', 1);
