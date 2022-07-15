@@ -11,6 +11,7 @@
 #include <QSystemTrayIcon>
 #include <QAction>
 #include <QStyle>
+#include <QScrollBar>
 
 #include "parameters.h"
 #include "settingmenu.h"

@@ -3,6 +3,7 @@
 #90C7CA | blue       | hover, color      | pushButton, menu
 #EEEEEE | white      | background, color | lineEdit, textEdit
 #808086 | light gray | disable
+#155049 | green      | hover, color      | pushButton, menu
 */
 
 /* ===================== QMenu =====================*/
@@ -13,12 +14,12 @@ QMenu::item:selected {
         border-left-color: transparent;
         border-bottom-color: transparent;
 
-        color: #EEEEEE;
+        color: #252523;
         padding-left:15px;
         padding-top:4px;
         padding-bottom:4px;
         padding-right:7px;
-        background-color: #90C7CA;
+        background-color: #EEEEEE;
         color: #1a1a1a;
 }
 QMenu::item {
@@ -56,7 +57,7 @@ QLineEdit::!enabled {
 
 /* ===================== QLabel =====================*/
 QLabel {
-        color: #90C7CA;
+        color: #EEEEEE;
 }
 
 /* ===================== QTextEdit =====================*/
@@ -78,11 +79,11 @@ QPushButton{
     border-right-color: transparent;
     border-left-color: transparent;
     border-bottom-color: #EEEEEE;
-    border-bottom-width: 2px;
+    border-bottom-width: 3px;
     border-style: solid;
     color: #EEEEEE;
     padding-bottom: 1px;
-    background-color: #252523 ;
+    background-color: #1a1a1a ;
 }
 QPushButton::default{
     border-style: solid;
@@ -90,11 +91,11 @@ QPushButton::default{
     border-right-color: transparent;
     border-left-color: transparent;
     border-bottom-color: #EEEEEE;
-    border-bottom-width: 2px;
+    border-bottom-width: 3px;
     border-style: solid;
     color: #EEEEEE;
     padding-bottom: 1px;
-    background-color: #252523 ;
+    background-color: #1a1a1a ;
 }
 
 QPushButton:hover{
@@ -102,24 +103,24 @@ QPushButton:hover{
         border-top-color: transparent;
         border-right-color: transparent;
         border-left-color: transparent;
-        border-bottom-color: #90C7CA;
-        border-bottom-width: 2px;
+        border-bottom-color: #155049;
+        border-bottom-width: 3px;
         border-style: solid;
-        color: #90C7CA;
+        color: #EEEEEE;
         padding-bottom: 2px;
-        background-color: #252523 ;
+        background-color: #1a1a1a ;
 }
 QPushButton:pressed{
         border-style: solid;
         border-top-color: transparent;
         border-right-color: transparent;
         border-left-color: transparent;
-        border-bottom-color: #EEEEEE;
-        border-bottom-width: 2px;
+        border-bottom-color: #155049;
+        border-bottom-width: 3px;
         border-style: solid;
-        color: #EEEEEE;
-        padding-bottom: 2px;
-        background-color: #252523 ;
+        color: #155049;
+        padding-bottom: 0px;
+        background-color: #1a1a1a ;
 }
 QPushButton:disabled{
         border-style: solid;
@@ -131,63 +132,65 @@ QPushButton:disabled{
         border-style: solid;
         color: #808086;
         padding-bottom: 1px;
-        background-color: #252523 ;
+        background-color: #1a1a1a ;
 }
 
 /* ===================== QMainWindow =====================*/
 QMainWindow {
-        background-color:#252523 ;
+        background-color:#1a1a1a ;
 }
 
 /* ===================== QDialog =====================*/
 QDialog {
-        background-color:#252523 ;
+        background-color:#1a1a1a ;
 }
 
 /* ===================== QColorDialog =====================*/
 QColorDialog {
-        background-color:#252523 ;
+        background-color:#1a1a1a ;
 }
 
 /* ===================== QSlider =====================*/
 QScrollBar:vertical {
      border: 2px solid #252523;
-     border-radius: 2px;
+     border-radius: 3px;
      background: #252523;
 }
 
 QScrollBar::handle:vertical {
-     border-radius: 2px;
-     background: #90C7CA;
+     border: 2px solid #EEEEEE;
+     border-radius: 3px;
+     background: #1a1a1a;
 }
 
 QScrollBar::add-line:vertical {
      border: 1px solid #252523;
-     border-radius: 2px;
+     border-radius: 3px;
      background: #252523;
 }
 
 QScrollBar::sub-line:vertical {
      border: 1px solid #252523;
-     border-radius: 2px;
+     border-radius: 3px;
      background: #252523;
 }
 
 
 QScrollBar::handle:horizontal {
-    border-radius: 2px;
-    background: #90C7CA;
+    border: 1px solid #252523;
+    border-radius: 3px;
+    background: #252523;
 }
 
 QScrollBar::add-line:horizontal {
      border: 1px solid #252523;
-     border-radius: 2px;
+     border-radius: 3px;
      background: #252523;
 }
 
 QScrollBar::sub-line:horizontal {
      border: 1px solid #252523;
-     border-radius: 2px;
+     border-radius: 3px;
      background: #252523;
 }
 
