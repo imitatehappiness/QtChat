@@ -25,7 +25,7 @@ public:
 public slots:
     void show();
 signals:
-    void setVisibleChatForm(bool, uint, QString);
+    void setVisibleChatForm(bool, uint, const QString &);
 private slots:
     void signInClicked();
     void registrationClicked();

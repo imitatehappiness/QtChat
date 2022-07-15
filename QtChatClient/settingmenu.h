@@ -6,6 +6,8 @@
 #include <QRegExp>
 #include <QRegExpValidator>
 
+#include "./src/include/databasethread.h"
+
 namespace Ui {
 class SettingMenu;
 }
@@ -15,6 +17,8 @@ class SettingMenu : public QDialog{
 public:
     explicit SettingMenu(QWidget *parent = nullptr);
     ~SettingMenu();
+    void setName(const QString&);
+
 signals:
     void sendData(const QString &, const QString &, const uint & );
 private slots:
@@ -27,6 +31,7 @@ private:
     Ui::SettingMenu *ui;
     QString mUsername, mHost;
     uint mPort;
+
 };
 
 #endif // SETTINGMENU_H

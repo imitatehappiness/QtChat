@@ -81,7 +81,6 @@ void Authentication::initFormObject(){
 
     mLineEditsObjects[idFormObject::authenticationLineEditPassword].first->setEchoMode(QLineEdit::EchoMode::Password);
 
-
     /// @section QPushButton =======================================================================================================
     QGridLayout *gPushButton = new QGridLayout;
     ui->w_widgetsPushButton->setLayout(gPushButton);

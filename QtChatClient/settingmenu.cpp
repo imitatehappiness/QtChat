@@ -49,3 +49,7 @@ void SettingMenu::show(){
         QWidget::show();
     }
 }
+
+void SettingMenu::setName(const QString &name){
+    ui->lE_name->setText(name);
+}

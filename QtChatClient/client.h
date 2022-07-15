@@ -33,10 +33,10 @@ private:
     bool connectedToHost;
     void printMessage(const QString& message);
     void setTrayIcon();
+    void setChatContent();
     QTcpSocket* mSocket;
     SettingMenu* mSettingMenu;
     Authentication* mAuthentication;
-    QString mUsername;
     QString mHost;
     uint mPort;
     DatabaseThread* mDB;
@@ -55,7 +55,7 @@ private slots:
     void on_pB_setting_clicked();
     void on_pB_sendMessage_clicked();
     void getSettingData(const QString &, const QString &, const uint & );
-    void getVisibleChatForm(bool, uint, QString);
+    void getVisibleChatForm(bool, uint, const QString &);
     void on_pB_disconnect_clicked();
 };
 
