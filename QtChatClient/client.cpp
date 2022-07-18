@@ -15,8 +15,6 @@ Client::Client(QWidget *parent) :
     mSettingMenu = new SettingMenu();
     connectedToHost = false;
 
-    ui->pB_sendMessage->setEnabled(0);
-
     connect(mSettingMenu, SIGNAL(sendData(const QString &, const QString &, const uint & )), this, SLOT(getSettingData(const QString &, const QString &, const uint & )));
     connect(mAuthentication, SIGNAL(setVisibleChatForm(bool, uint, const QString &)), this, SLOT(getVisibleChatForm(bool, uint, const QString &)));
     connect(this, SIGNAL(sendMessageEnter()), this, SLOT(on_pB_sendMessage_clicked()));
@@ -62,7 +60,7 @@ void Client::on_pB_sendMessage_clicked(){
     QString message = ui->lE_inputMessage->text();
     bool validate;
 
-    if(message != ""){
+    if(message != "" && connectedToHost){
         /// insert content
         QString query = "INSERT INTO contents (chat_id, user_id, content) VALUES (" + QString::number(mClientInfo.idChat) + ", " +
                 QString::number(mClientInfo.idUser) + ", '" +
@@ -98,16 +96,12 @@ void Client::getSettingData(const QString& username, const QString& host, const 
     mHost = host;
     mPort = port;
 
-    ui->pB_sendMessage->setEnabled(0);
-
     if (!connectedToHost){
         mSocket = new QTcpSocket();
         mSocket->connectToHost(mHost, mPort);
         connect(mSocket, SIGNAL(connected()),    this, SLOT(socketConnected()));
         connect(mSocket, SIGNAL(disconnected()), this, SLOT(socketDisconnected()));
         connect(mSocket, SIGNAL(readyRead()),    this, SLOT(socketReadyRead()));
-
-        ui->pB_sendMessage->setEnabled(1);
     }
 
     if(mClientInfo.username != username){
@@ -143,7 +137,7 @@ void Client::on_pB_disconnect_clicked(){
         mSocket->write("<font color=\"#5b836d\">" +  mClientInfo.username.toUtf8() + " has left the chat room.</font>");
         mSocket->disconnectFromHost();
     }
-    ui->pB_sendMessage->setEnabled(0);
+    ui->pB_sendMessage->setEnabled(1);
 }
 
 void Client::setChatContent(){
