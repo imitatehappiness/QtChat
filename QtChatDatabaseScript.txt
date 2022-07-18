@@ -24,6 +24,7 @@ CREATE TABLE chats(
 
 -- Таблица со списком участников чата
 CREATE TABLE party(
+	id SERIAL PRIMARY KEY,
 	chat_id INTEGER REFERENCES chats (id),
 	user_id INTEGER REFERENCES users (id)
 );
@@ -45,6 +46,6 @@ CREATE TABLE messages(
 	date_create TIMESTAMP NOT NULL
 );
 
-
 INSERT INTO users (login, name, password, email) VALUES ('admin', 'admin', 'admin', 'admin@mail.ru');
-INSERT INTO chats (name, user_id) VALUES ('admin', 1);
+INSERT INTO chats (name, user_id) VALUES ('All chat', 1);
+INSERT INTO party (chat_id, user_id) VALUES (1, 1);

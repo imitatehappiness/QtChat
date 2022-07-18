@@ -62,33 +62,35 @@ void Client::on_pB_sendMessage_clicked(){
     QString message = ui->lE_inputMessage->text();
     bool validate;
 
-    /// insert content
-    QString query = "INSERT INTO contents (chat_id, user_id, content) VALUES (" + QString::number(mClientInfo.idChat) + ", " +
-            QString::number(mClientInfo.idUser) + ", '" +
-            message + "')";
-    validate = mDB->setQuery(query);
+    if(message != ""){
+        /// insert content
+        QString query = "INSERT INTO contents (chat_id, user_id, content) VALUES (" + QString::number(mClientInfo.idChat) + ", " +
+                QString::number(mClientInfo.idUser) + ", '" +
+                message + "')";
+        validate = mDB->setQuery(query);
 
-    ///select content id
-    query = "SELECT id FROM contents WHERE chat_id = " + QString::number(mClientInfo.idChat) +
-            " AND user_id = " + QString::number(mClientInfo.idUser) +
-            " AND content = '" + message + "'";
+        ///select content id
+        query = "SELECT id FROM contents WHERE chat_id = " + QString::number(mClientInfo.idChat) +
+                " AND user_id = " + QString::number(mClientInfo.idUser) +
+                " AND content = '" + message + "'";
 
-    validate = mDB->setQuery(query);
-    QVector<QVector<QVariant>> res =  mDB->getData();
-    int idContent = res.size() != 0 ? res[0][0].toInt() :  -1;
+        validate = mDB->setQuery(query);
+        QVector<QVector<QVariant>> res =  mDB->getData();
+        int idContent = res.size() != 0 ? res[0][0].toInt() :  -1;
 
-    /// insert message
-    query = "INSERT INTO messages (chat_id, user_id, content_id, date_create) VALUES (" + QString::number(mClientInfo.idChat) + ", " +
-            QString::number(mClientInfo.idUser) + ", " +
-            QString::number(idContent) + ", current_timestamp)";
-    validate = mDB->setQuery(query);
-    Q_UNUSED(validate);
+        /// insert message
+        query = "INSERT INTO messages (chat_id, user_id, content_id, date_create) VALUES (" + QString::number(mClientInfo.idChat) + ", " +
+                QString::number(mClientInfo.idUser) + ", " +
+                QString::number(idContent) + ", current_timestamp)";
+        validate = mDB->setQuery(query);
+        Q_UNUSED(validate);
 
-    QTime time = QTime::currentTime();
-    message = "<font color=\"#808086\" style=\"font-weight: bold; font-size: 11px;\">[" + time.toString()  + "]</font> " +
-              "<font color=\"#155049\" style=\"font-weight: bold;\">"  + name.toUtf8()    + "</font>: " + message.toUtf8();
+        QTime time = QTime::currentTime();
+        message = "<font color=\"#808086\" style=\"font-weight: bold; font-size: 11px;\">[" + time.toString()  + "]</font> " +
+                  "<font color=\"#155049\" style=\"font-weight: bold;\">"  + name.toUtf8()    + "</font>: " + message.toUtf8();
 
-    mSocket->write(message.toUtf8());
+        mSocket->write(message.toUtf8());
+    }
     ui->lE_inputMessage->clear();
 }
 
@@ -182,7 +184,7 @@ void Client::setChatContent(){
                 QDateTime timeMessageSend = contentInfo[i][1].toDateTime();
                 QString time, name;
                 time = "<font color=\"#808086\" style=\"font-weight: bold; font-size: 11px;\">[" + timeMessageSend.time().toString() + "]</font> ";
-                name = "<font color=\"#155049\" style=\"font-weight: bold;\">"  + username[0][0].toString()         + "</font>";
+                name = "<font color=\"#155049\" style=\"font-weight: bold;\">"  + username[0][0].toString() + "</font>";
                 ui->tE_display->append(time + name + ": " + userMessage[0][0].toString());
                 ui->tE_display->setAlignment(Qt::AlignLeft);
             }

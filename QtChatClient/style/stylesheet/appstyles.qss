@@ -4,6 +4,7 @@
 #EEEEEE | white      | background, color | lineEdit, textEdit
 #808086 | light gray | disable
 #155049 | green      | hover, color      | pushButton, menu
+#004524
 */
 
 /* ===================== QMenu =====================*/
@@ -103,7 +104,7 @@ QPushButton:hover{
         border-top-color: transparent;
         border-right-color: transparent;
         border-left-color: transparent;
-        border-bottom-color: #155049;
+        border-bottom-color: #e0b1cb;
         border-bottom-width: 3px;
         border-style: solid;
         color: #EEEEEE;
@@ -115,10 +116,10 @@ QPushButton:pressed{
         border-top-color: transparent;
         border-right-color: transparent;
         border-left-color: transparent;
-        border-bottom-color: #155049;
+        border-bottom-color: #e0b1cb;
         border-bottom-width: 3px;
         border-style: solid;
-        color: #155049;
+        color: #e0b1cb;
         padding-bottom: 0px;
         background-color: #1a1a1a ;
 }
