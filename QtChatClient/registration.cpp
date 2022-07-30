@@ -8,9 +8,9 @@ Registration::Registration(QWidget *parent) :
     ui->setupUi(this);
     initFormObject();
 
-//    QRegExp emailRegex ("^[A-Z0-9a-z._-]{1,}@(\\w+)(\\.(\\w+))(\\.(\\w+))?(\\.(\\w+))?$");
-//    QRegExpValidator *emailValidator = new QRegExpValidator(emailRegex, this);
-//    ui->lE_mail->setValidator(emailValidator);
+    //    QRegExp emailRegex ("^[A-Z0-9a-z._-]{1,}@(\\w+)(\\.(\\w+))(\\.(\\w+))?(\\.(\\w+))?$");
+    //    QRegExpValidator *emailValidator = new QRegExpValidator(emailRegex, this);
+    //    ui->lE_mail->setValidator(emailValidator);
 
     mDB = new DatabaseThread();
 }
@@ -39,6 +39,7 @@ void Registration::enterClicked(){
     }else{
         QString query = "SELECT id FROM users WHERE login = '" + login + "'";
         bool validate = mDB->setQuery(query);
+        Q_UNUSED(validate);
 
         QVector<QVector<QVariant>> res =  mDB->getData();
         if(res.size() != 0){
@@ -47,6 +48,7 @@ void Registration::enterClicked(){
 
             QString query = "SELECT id FROM users WHERE email = '" + email + "'";
             validate = mDB->setQuery(query);
+            Q_UNUSED(validate);
             res =  mDB->getData();
             if(res.size() != 0){
                 mLabelObjects[idFormObject::registrationLabelInformation].first->setText("Email is already in use");
@@ -55,11 +57,23 @@ void Registration::enterClicked(){
                 QString query = "INSERT INTO users (login, name, password, email) VALUES ( '" + login + "', '" + login + "', '" + password + "', '" + email + "')";
                 validate = mDB->setQuery(query);
                 mLabelObjects[idFormObject::registrationLabelInformation].first->setText("");
+
+                if(validate){
+                    query = "SELECT id FROM users WHERE login = '" + login + "'";
+                    validate = mDB->setQuery(query);
+                    res =  mDB->getData();
+
+                    if(validate){
+                        query = "INSERT INTO party (chat_id, user_id) VALUES (1," + QString::number(res[0][0].toInt()) + " )";
+                        validate = mDB->setQuery(query);
+                        Q_UNUSED(validate);
+                    }
+                }
+
                 emit setVisibleLoginForm(true);
                 close();
             }
         }
-        Q_UNUSED(validate);
     }
 }
 
@@ -85,7 +99,7 @@ void Registration::show(){
 void Registration::initFormObject(){
 
     /// @section QLineEdit =======================================================================================================
-    QGridLayout *gLineEdit = new QGridLayout;
+    QGridLayout* gLineEdit = new QGridLayout;
     ui->w_widgetsLineEdit->setLayout(gLineEdit);
 
     mLineEditsObjects[idFormObject::registrationLineEditLogin]           = {new QLineEdit(), "Login"};
@@ -95,7 +109,7 @@ void Registration::initFormObject(){
 
     int row = 1, col = 1;
     for(const auto &w : mLineEditsObjects){
-        QLineEdit * lineEdit = w.first;
+        QLineEdit* lineEdit = w.first;
         lineEdit->setPlaceholderText(w.second);
         lineEdit->setMinimumSize(300, MIN_HEIGHT_OBJECT);
         gLineEdit->addWidget(lineEdit, row, col);
@@ -105,7 +119,7 @@ void Registration::initFormObject(){
     mLineEditsObjects[idFormObject::registrationLineEditConfirmPassword].first->setEchoMode(QLineEdit::EchoMode::Password);
 
     /// @section QPushButton =======================================================================================================
-    QGridLayout *gPushButton = new QGridLayout;
+    QGridLayout* gPushButton = new QGridLayout;
     ui->w_widgetsPushButton->setLayout(gPushButton);
 
     mPushButtonObjects[idFormObject::registrationPushButtonCancel] = {new QPushButton(), "Cancel"};
@@ -113,7 +127,7 @@ void Registration::initFormObject(){
 
     row = 1, col = 1;
     for(const auto &w : mPushButtonObjects){
-        QPushButton * pushButton = w.first;
+        QPushButton* pushButton = w.first;
         pushButton->setText(w.second);
         pushButton->setMinimumSize(100, MIN_HEIGHT_OBJECT);
         gPushButton->addWidget(pushButton, row, col);
@@ -124,14 +138,14 @@ void Registration::initFormObject(){
     connect(mPushButtonObjects[idFormObject::registrationPushButtonEnter].first, SIGNAL(clicked()), this, SLOT(enterClicked()));
 
     /// @section QLabel =======================================================================================================
-    QGridLayout *gLabel = new QGridLayout;
+    QGridLayout* gLabel = new QGridLayout;
     ui->w_widgetsLabel->setLayout(gLabel);
 
     mLabelObjects[idFormObject::registrationLabelInformation] = {new QLabel(), "Information"};
 
     row = 1, col = 1;
     for(const auto &w : mLabelObjects){
-        QLabel * label = w.first;
+        QLabel* label = w.first;
         label->setMinimumSize(300, MIN_HEIGHT_OBJECT);
         gLabel->addWidget(label, row, col);
         col++;

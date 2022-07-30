@@ -5,6 +5,14 @@
 #include <QString>
 #include <QRegExp>
 #include <QRegExpValidator>
+#include <QWidget>
+#include <QPushButton>
+#include <QLineEdit>
+#include <QLabel>
+#include <QLayout>
+
+#include "parameters.h"
+#include "./src/include/databasethread.h"
 
 namespace Ui {
 class SettingMenu;
@@ -15,11 +23,12 @@ class SettingMenu : public QDialog{
 public:
     explicit SettingMenu(QWidget *parent = nullptr);
     ~SettingMenu();
+    void setName(const QString&);
 signals:
     void sendData(const QString &, const QString &, const uint & );
 private slots:
-    void on_pB_cancel_clicked();
-    void on_pB_save_clicked();
+    void cancelClicked();
+    void connectClicked();
 public slots:
     void show();
 
@@ -27,6 +36,10 @@ private:
     Ui::SettingMenu *ui;
     QString mUsername, mHost;
     uint mPort;
+    QMap<int, QPair<QLineEdit*, QString>>   mLineEditsObjects;
+    QMap<int, QPair<QPushButton*, QString>> mPushButtonObjects;
+
+    void initFormObject();
 };
 
 #endif // SETTINGMENU_H

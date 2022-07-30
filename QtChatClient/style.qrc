@@ -6,5 +6,7 @@
         <file>style/stylesheet/appstyles.qss</file>
         <file>style/icons/disconnect.png</file>
         <file>style/icons/settings.png</file>
+        <file>style/icons/open.png</file>
+        <file>style/icons/quit.png</file>
     </qresource>
 </RCC>
