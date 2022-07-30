@@ -47,5 +47,5 @@ CREATE TABLE messages(
 );
 
 INSERT INTO users (login, name, password, email) VALUES ('admin', 'admin', 'admin', 'admin@mail.ru');
-INSERT INTO chats (name, user_id) VALUES ('All chat', 1);
+INSERT INTO chats (name, user_id) VALUES ('Main', 1);
 INSERT INTO party (chat_id, user_id) VALUES (1, 1);
