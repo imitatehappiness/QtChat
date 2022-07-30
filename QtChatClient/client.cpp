@@ -102,6 +102,8 @@ void Client::getSettingData(const QString& username, const QString& host, const 
         connect(mSocket, SIGNAL(connected()),    this, SLOT(socketConnected()));
         connect(mSocket, SIGNAL(disconnected()), this, SLOT(socketDisconnected()));
         connect(mSocket, SIGNAL(readyRead()),    this, SLOT(socketReadyRead()));
+
+        setChatContent();
         setUsersRoom(mClientInfo.idChat);
     }
 
@@ -124,7 +126,6 @@ void Client::getVisibleChatForm(bool visible, uint id,const QString& name){
     mSettingMenu->setName(mClientInfo.username);
 
     setVisible(visible);
-    setChatContent();
     setTrayIcon();
 }
 
