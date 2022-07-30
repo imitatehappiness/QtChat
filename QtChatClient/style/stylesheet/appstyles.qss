@@ -9,7 +9,7 @@ QMenu::item:selected {
         border-style: solid;
         border-top-color: transparent;
         border-right-color: transparent;
-        border-left-color: #252523;
+        border-left-color: #90C7CA;
         border-bottom-color: transparent;
         border-left-width: 3px;
         color: #EEEEEE;

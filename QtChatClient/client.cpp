@@ -26,7 +26,6 @@ Client::~Client(){
     delete mAuthentication;
     delete mSettingMenu;
     delete mDB;
-    delete mSocket;
     delete ui;
 }
 
@@ -96,7 +95,7 @@ void Client::getSettingData(const QString& username, const QString& host, const 
     ui->pB_sendMessage->setEnabled(0);
 
     if (!connectedToHost){
-        mSocket = new QTcpSocket();
+        mSocket = new QTcpSocket(this);
         mSocket->connectToHost(mHost, mPort);
         connect(mSocket, SIGNAL(connected()),    this, SLOT(socketConnected()));
         connect(mSocket, SIGNAL(disconnected()), this, SLOT(socketDisconnected()));
